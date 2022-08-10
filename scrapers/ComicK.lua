@@ -64,15 +64,17 @@ function MangaChapters(manga_url)
             chap = chap .. ': ' .. tostring(title)
         end
 
-        chap = chap .. ' ['
-        for key, val in pairs(group_name) do
-            if key ~= 1 then
-            chap = chap .. ', '
-            end
+        if group_name then
+          chap = chap .. ' ['
+          for key, val in pairs(group_name) do
+              if key ~= 1 then
+              chap = chap .. ', '
+              end
 
-            chap = chap .. tostring(val)
+              chap = chap .. tostring(val)
+          end
+          chap = chap .. ']'
         end
-        chap = chap .. ']'
 
         local link = api_base .. '/chapter/' .. tostring(hid)
         local chapter = { url = link, name = chap }
