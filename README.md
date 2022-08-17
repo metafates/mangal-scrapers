@@ -10,6 +10,7 @@ Feel free to contribute!
 
 ## Scrapers
 
+- [Asura Scans](scrapers/AsuraScans.lua)
 - [ComicK](scrapers/ComicK.lua)
 - [Luminous Scans](scrapers/LuminousScans.lua)
 - [Manganelo](scrapers/Manganelo.lua)
