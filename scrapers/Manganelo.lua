@@ -6,15 +6,24 @@
 ----------------------------------------
 
 
---- IMPORTS ---
+
+
+----- IMPORTS -----
 Html = require("html")
 Http = require("http")
+--- END IMPORTS ---
 
 
---- VARIABLES ---
+
+
+----- VARIABLES -----
 Client = Http.client()
 Base = "https://ww5.manganelo.tv"
+--- END VARIABLES ---
 
+
+
+----- MAIN -----
 
 --- Searches for manga with given query.
 -- @param query Query to search for
@@ -74,7 +83,12 @@ function ChapterPages(chapterURL)
     return pages
 end
 
+--- END MAIN ---
 
+
+
+
+----- HELPERS -----
 function Reverse(t)
     local n = #t
     local i = 1
@@ -84,5 +98,6 @@ function Reverse(t)
         n = n - 1
     end
 end
+--- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua

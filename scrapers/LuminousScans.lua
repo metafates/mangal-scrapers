@@ -6,19 +6,28 @@
 -------------------------------------
 
 
---- IMPORTS ---
+
+
+----- IMPORTS -----
 Http = require("http")
 Headless = require("headless")
 Html = require("html")
 Time = require("time")
+--- END IMPORTS ---
 
 
---- VARIABLES ---
+
+
+----- VARIABLES -----
 Client = Http.client()
 Browser = Headless.browser()
 Page = Browser:page()
 Base = "https://luminousscans.com"
+--- END VARIABLES ---
 
+
+
+----- MAIN -----
 
 --- Searches for manga with given query.
 -- @param query Query to search for
@@ -83,5 +92,12 @@ function ChapterPages(chapterURL)
     return pages
 end
 
+--- END MAIN ---
+
+
+
+
+----- HELPERS -----
+--- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua

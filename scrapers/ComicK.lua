@@ -1,28 +1,33 @@
--------------------------------
+------------------------------
 -- @name    ComicK 
--- @url     https://comick.fun/
+-- @url     https://comick.fun
 -- @author  Sravan Balaji 
 -- @license MIT
--------------------------------
+------------------------------
 
 
---- IMPORTS ---
+
+
+----- IMPORTS -----
 Http = require('http')
 Json = require('json')
+--- END IMPORTS ---
 
 
---- VARIABLES ---
+
+
+----- VARIABLES -----
 Client = Http.client()
 ApiBase = 'https://api.comick.fun'
 ImageBase = 'https://meo3.comick.pictures'
--- Limit on Number of Chapters per Page of Results
--- `MangaChapters()` will display all results regardless
--- of the value of this variable by iterating through
--- all the pages
 Limit = 50
 Lang = 'en' -- Language: en = english, fr = french, etc.
 Order = 1   -- Chapter Order: 0 = descending, 1 = ascending
+--- END VARIABLES ---
 
+
+
+----- MAIN -----
 
 --- Searches for manga with given query.
 -- @param query Query to search for
@@ -128,5 +133,12 @@ function ChapterPages(chapterURL)
     return pages
 end
 
+--- END MAIN ---
+
+
+
+
+----- HELPERS -----
+--- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua
