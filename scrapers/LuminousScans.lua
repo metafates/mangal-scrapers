@@ -1,7 +1,7 @@
 -------------------------------------
 -- @name    LuminousScans 
 -- @url     https://luminousscans.com
--- @author  lain 
+-- @author  metafates 
 -- @license MIT
 -------------------------------------
 

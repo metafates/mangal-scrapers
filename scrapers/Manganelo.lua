@@ -1,7 +1,7 @@
 ----------------------------------------
 -- @name    Manganelo 
 -- @url     https://m.manganelo.com/wwww
--- @author  lain 
+-- @author  metafates 
 -- @license MIT
 ----------------------------------------
 

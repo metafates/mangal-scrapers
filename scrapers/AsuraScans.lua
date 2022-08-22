@@ -1,7 +1,7 @@
 --------------------------------------
 -- @name    AsuraScans 
 -- @url     https://www.asurascans.com
--- @author  lain 
+-- @author  metafates 
 -- @license MIT
 --------------------------------------
 
