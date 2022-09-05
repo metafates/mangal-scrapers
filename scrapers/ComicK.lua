@@ -77,6 +77,12 @@ function MangaChapters(mangaURL)
         for _, val in pairs(result_body['chapters']) do
             local hid = val['hid']
             local num = val['chap']
+            local volume = tostring(val['vol'])
+            if volume ~= "nil" then
+                volume = "Vol." .. volume
+            else
+                volume = ""
+            end
             local title = val['title']
             local chap = 'Chapter ' .. tostring(num)
             local group_name = val['group_name']
@@ -98,7 +104,7 @@ function MangaChapters(mangaURL)
             end
 
             local link = ApiBase .. '/chapter/' .. tostring(hid)
-            local chapter = { url = link, name = chap }
+            local chapter = { url = link, name = chap, volume = volume }
 
             chapters[i] = chapter
             i = i + 1
