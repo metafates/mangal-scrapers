@@ -43,12 +43,15 @@ function SearchManga(query)
 
     for _, val in pairs(result_body) do
         local title = val['title']
-        local id = val['id']
-        local link = ApiBase .. '/comic/' .. tostring(id) .. '/chapter'
-        local manga = { url = link, name = title }
 
-        mangas[i] = manga
-        i = i + 1
+        if title ~= nil then
+            local id = val['id']
+            local link = ApiBase .. '/comic/' .. tostring(id) .. '/chapter'
+            local manga = { url = link, name = title }
+
+            mangas[i] = manga
+            i = i + 1
+        end
     end
 
     return mangas
