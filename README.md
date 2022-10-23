@@ -14,3 +14,4 @@ Feel free to contribute! You can use `mangal gen --name "..." --url "..."` to cr
 - [ComicK](scrapers/ComicK.lua)
 - [Luminous Scans](scrapers/LuminousScans.lua)
 - [Manganelo](scrapers/Manganelo.lua)
+- [Mangasee](scrapers/Mangasee.lua)
