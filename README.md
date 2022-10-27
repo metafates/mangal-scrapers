@@ -4,7 +4,7 @@ This is a collection of custom lua scrapers for [mangal](https://github.com/meta
 
 To browse and install run
 
-    mangal install
+    mangal sources install
 
 Feel free to contribute! You can use `mangal gen --name "..." --url "..."` to create a template for the new scraper
 
