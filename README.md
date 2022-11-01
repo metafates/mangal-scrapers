@@ -6,7 +6,7 @@ To browse and install run
 
     mangal sources install
 
-Feel free to contribute! You can use `mangal gen --name "..." --url "..."` to create a template for the new scraper
+Feel free to contribute! You can use `mangal sources gen --name "..." --url "..."` to create a template for the new scraper
 
 ## Scrapers
 
