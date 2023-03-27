@@ -1,7 +1,7 @@
 ----------------------------------
 -- @name    scansmanga.me 
 -- @url     https://scansmangas.me
--- @author  tlwest 
+-- @author  liamlawless21 
 -- @license MIT
 ----------------------------------
 
@@ -42,17 +42,17 @@ Manga fields:
 -- @return Table of mangas
 function SearchManga(query)
 	local request = Http.request("GET", Base .. "/?s=" .. query)
-    local result = Client:do_request(request)
+	local result = Client:do_request(request)
 
-    local doc = Html.parse(result.body)
-    local mangas = {}
+	local doc = Html.parse(result.body)
+	local mangas = {}
 
-    doc:find(".bigor > a"):each(function (i, s)
-        local manga = { name = s:attr("title"), url = s:attr("href") }
-        mangas[i+1] = manga
-    end)
+	doc:find(".bigor > a"):each(function (i, s)
+        	local manga = { name = s:attr("title"), url = s:attr("href") }
+        	mangas[i+1] = manga
+	end)
 
-    return mangas
+	return mangas
 end
 
 
@@ -70,17 +70,16 @@ Chapter fields:
 -- @return Table of chapters
 function MangaChapters(mangaURL)
 	local request = Http.request("GET", mangaURL)
-    local result = Client:do_request(request)
-    local doc = Html.parse(result.body)
+	local result = Client:do_request(request)
+	local doc = Html.parse(result.body)
+	local chapters = {}
 
-    local chapters = {}
+	doc:find(".lchx.desktop > a"):each(function (i, s)
+		local chapter = { name = s:attr("title"), url = s:attr("href") }
+		chapters[i+1] = chapter
+    	end)
 
-    doc:find(".lchx.desktop > a"):each(function (i, s)
-        local chapter = { name = s:attr("title"), url = s:attr("href") }
-        chapters[i+1] = chapter
-    end)
-
-    return chapters
+	return chapters
 end
 
 
@@ -94,8 +93,8 @@ Page fields:
 -- @return Table of pages
 function ChapterPages(chapterURL)
 	local request = Http.request("GET", chapterURL)
-    local result = Client:do_request(request)
-    local doc = Html.parse(result.body)
+	local result = Client:do_request(request)
+	local doc = Html.parse(result.body)
 
 	local pages = {}
 	local number_of_pages = 0
@@ -125,42 +124,7 @@ end
 
 
 ----- HELPERS -----
-function Reverse(t)
-    local n = #t
-    local i = 1
-    while i < n do
-        t[i],t[n] = t[n],t[i]
-        i = i + 1
-        n = n - 1
-    end
-end
 
-function Count(t)
-	local count = 0
-	for _ in pairs(T) do count = count + 1 end
-	return count
-end
-
-function ExtractLink(url)
-	local pattern = "^(.*/)[^/]+/$"
-	local result = string.match(url, pattern)
-	return result
-end
-
-function delete_every_other(table)
-	for i = #table, 1, -1 do
-	  if i % 2 == 0 then
-		table.remove(table, i)
-	  end
-	end
-	return table
-end
-
-function LinkTransformer(url)
-	local pattern = "^(.-)/(%w+)-(%w+)/$"
-	local transformed_url = string.gsub(url, pattern, "%1/%2/%3")
-	return transformed_url
-end
 --- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua
