@@ -48,7 +48,6 @@ function SearchManga(query)
     return mangas
 end
 
-
 --- Gets the list of all manga chapters.
 -- @param mangaURL URL of the manga
 -- @return Table of tables with the following fields: name, url
@@ -65,13 +64,26 @@ function MangaChapters(mangaURL)
 
         local chapter = { url = link:attr("href"), name = string.gsub(link:find("span"):first():text():sub(2),"\n"," ") }
 
-        if n ~= nil and not string.find(tostring(n), '%.') then
-            chapters[n] = chapter
+        if n == nil then
+            goto continue
         end
+
+        if string.find(tostring(n), '%.') then
+            goto continue
+        end
+
+        if n == 0 then
+            goto continue
+        end
+
+        chapters[n] = chapter
+
+        ::continue::
     end
 
     return chapters
 end
+
 
 
 --- Gets the list of all pages of a chapter.
