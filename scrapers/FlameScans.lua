@@ -64,18 +64,22 @@ function MangaChapters(mangaURL)
 
         local chapter = { url = link:attr("href"), name = string.gsub(link:find("span"):first():text():sub(2),"\n"," ") }
 
+        -- Skip this chapter if the number is nil
         if n == nil then
             goto continue
         end
 
-        if string.find(tostring(n), '%.') then
+        -- Skip this chapter if the number is a floating-point number
+        if math.floor(n) ~= n then
             goto continue
         end
 
+        -- Skip this chapter if the number is 0
         if n == 0 then
             goto continue
         end
 
+        -- Add this chapter to the list of chapters
         chapters[n] = chapter
 
         ::continue::
@@ -83,8 +87,6 @@ function MangaChapters(mangaURL)
 
     return chapters
 end
-
-
 
 --- Gets the list of all pages of a chapter.
 -- @param chapterURL URL of the chapter
