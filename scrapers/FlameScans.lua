@@ -54,29 +54,27 @@ function MangaChapters(mangaURL)
     Time.sleep(Delay)
 
     local chapters = {}
-	
-	local date_pattern = "(%w+)%s+(%d+),%s+(%d+)"
-
-	local month_names = {
-		January = "01", February = "02", March = "03", April = "04",
-		May = "05", June = "06", July = "07", August = "08",
-		September = "09", October = "10", November = "11", December = "12",
-	}
+    local date_pattern = "(%w+)%s+(%d+),%s+(%d+)"
+    local month_names = {
+	January = "01", February = "02", March = "03", April = "04",
+	May = "05", June = "06", July = "07", August = "08",
+	September = "09", October = "10", November = "11", December = "12",
+    }
 
     for _, v in ipairs(Page:elements("#chapterlist > ul li")) do
         local n = tonumber(v:attribute("data-num"))
         local elem = Html.parse(v:html())
         local link = elem:find("a"):first()
-		local chapter_date = link:find(".chapterdate"):first():text()
-		local iso_date = ""
-		
-		if chapter_date ~= nil then 
-			local month_name, day, year = chapter_date:match(date_pattern)
-			local month = month_names[month_name]
-			
-			local timestamp = os.time({year=year, month=month, day=day})
-			iso_date = os.date("%Y-%m-%d", timestamp)
-		end	
+	local chapter_date = link:find(".chapterdate"):first():text()
+	local iso_date = ""
+
+	if chapter_date ~= nil then 
+	    local month_name, day, year = chapter_date:match(date_pattern)
+	    local month = month_names[month_name]
+
+	    local timestamp = os.time({year=year, month=month, day=day})
+	    iso_date = os.date("%Y-%m-%d", timestamp)
+	end	
 
         local chapter = { url = link:attr("href"), name = string.gsub(link:find("span"):first():text():sub(2),"\n"," "), chapter_date=iso_date }
 
