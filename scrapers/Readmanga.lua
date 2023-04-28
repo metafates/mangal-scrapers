@@ -1,7 +1,7 @@
 --------------------------
 -- @name    Readmanga 
 -- @url     https://readmanga.live/
--- @author  https://github.com /ts-vadim
+-- @author  ts-vadim (https://github.com/ts-vadim)
 -- @license MIT
 --------------------------
 
@@ -14,9 +14,11 @@
 ----- IMPORTS -----
 html = require("html")
 http = require("http")
+time = require("time")
 HttpUtil = require("http_util")
 inspect = require("inspect")
 strings = require("strings")
+json = require("json")
 --- END IMPORTS ---
 
 
@@ -41,7 +43,6 @@ end
 
 
 ----- MAIN -----
-
 --- Searches for manga with given query. 
 -- @param query string Query to search for
 -- @return manga[] Table of mangas
@@ -105,51 +106,36 @@ end
 -- @param chapterURL string URL of the chapter
 -- @return page[]
 function ChapterPages(chapterURL)
-	return {}
-end
+    local request = http.request("GET", chapterURL)
+    local result = client:do_request(request)
+    h = result.body
 
+    -- For some reason image URLs are passed to readerInit() function in bare HTML
+    -- with some other arguments. So I'm trying to get just the urls here.
+    json_start = h:find("rm_h.readerInit%(")
+    json_start = h:find("%[", json_start)
+    s = h:sub(json_start)
+    s = s:sub(1, s:find("%)"))
+    s = s:sub(1, #s - s:reverse():find("%]") + 1)
+    s = "[" .. s:gsub("'", "\"") .. "]"
+    j, e = json.decode(s)
+    if e then
+        error(e)
+    end
+
+    pages = {}
+    for i,v in ipairs(j[1]) do
+        url = v[1] .. v[3]
+        url = url:sub(1, url:find("?") - 1)
+        pages[i] = {
+            url = url,
+            index = i,
+        }
+    end
+
+    return pages
+end
 --- END MAIN ---
-
-
---- DEBUG ---
-if DEBUG then
-
-    -- query = "klinok__rassekaiuchii_demonov__A5327"
-    query = "moia_liubov_999_urovnia_k_iamada_kunu__A5274/"
-
-    -- print(inspect(MangaChapters(URL_BASE .. query)))
-    print(inspect(SearchManga("one punch man")))
-
-    -- local request = http.request("GET", URL_BASE .. query)
-    -- local result = client:do_request(request)
-    -- local doc = html.parse(result.body)
-
-    -- name = doc:find(".name"):text()
-    -- orig_name = doc:find(".original-name"):text()
-    -- eng_name = doc:find(".eng-name"):text()
-    -- summary = doc:find(".manga-description div span"):text()
-    -- author = doc:find(".elem_author a"):text()
-    -- genres = ""
-    -- doc:find(".elem_genre a"):each(function(i,s)
-    --     genres = genres .. s:text() .. ","
-    -- end)
-    -- chapters = {}
-    -- doc:find(".chapters-link a.chapter-link"):each(function(i,s)
-    --     chapter = strings.trim_space(s:text())
-    --     href = s:attr("href")
-    --     path = strings.split(strings.trim(href, "/"), "/")
-    --     print("\"" .. chapter .. "\"")
-    -- end)
-
-    -- print("Name: " .. name)
-    -- print("Original name: " .. orig_name)
-    -- print("English name: " .. eng_name)
-    -- print("Author: " .. author)
-    -- print("Summary: " .. summary)
-    -- print("Genres: " .. genres)
-
-end
---- END DEBUG ---
 
 
 -- ex: ts=4 sw=4 et filetype=lua
