@@ -1,6 +1,6 @@
 --------------------------------------
 -- @name    FlameScans
--- @url     https://www.flamescans.com
+-- @url     https://www.flamescans.org
 -- @author  metafates & belphemur
 -- @license MIT
 --------------------------------------
