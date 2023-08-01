@@ -19,7 +19,7 @@ Json = require('json')
 ----- VARIABLES -----
 Client = Http.client({ timeout = 20 })
 ApiBase = 'https://api.comick.fun'
-ImageBase = 'https://meo3.comick.pictures'
+ImageBase = 'https://meo.comick.pictures'
 Limit = 50
 Lang = 'en' -- Language: en = english, fr = french, etc.
 Order = 1 -- Chapter Order: 0 = descending, 1 = ascending
@@ -33,7 +33,7 @@ Order = 1 -- Chapter Order: 0 = descending, 1 = ascending
 -- @param query Query to search for
 -- @return Table of tables with the following fields: name, url
 function SearchManga(query)
-    local request_url = ApiBase .. '/search?&q=' .. query
+    local request_url = ApiBase .. '/v1.0/search?&q=' .. query
     local request = Http.request('GET', request_url)
     local result = Client:do_request(request)
     local result_body = Json.decode(result['body'])
