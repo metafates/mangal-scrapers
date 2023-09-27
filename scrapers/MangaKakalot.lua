@@ -1,5 +1,5 @@
 --------------------------------------
--- @name    ManhuaUs
+-- @name    MangaKakalot
 -- @url     https://www.mangakakalot.is/
 -- @author  mpiva
 -- @license MIT
