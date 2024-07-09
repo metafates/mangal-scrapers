@@ -1,6 +1,6 @@
 ------------------------------
 -- @name    ComicK
--- @url     https://comick.fun
+-- @url     https://comick.io
 -- @author  Sravan Balaji
 -- @license MIT
 ------------------------------
@@ -11,13 +11,15 @@
 ----- IMPORTS -----
 Http = require('http')
 Json = require('json')
+-- inspect = require('inspect')
 --- END IMPORTS ---
 
 
 
 
 ----- VARIABLES -----
-Client = Http.client({ timeout = 20 })
+Debug = false
+Client = Http.client({ timeout = 20, insecure_ssl = true, debug=Debug })
 ApiBase = 'https://api.comick.fun'
 ImageBase = 'https://meo.comick.pictures'
 Limit = 50
@@ -33,7 +35,7 @@ Order = 1 -- Chapter Order: 0 = descending, 1 = ascending
 -- @param query Query to search for
 -- @return Table of tables with the following fields: name, url
 function SearchManga(query)
-    local request_url = ApiBase .. '/v1.0/search?&q=' .. query
+    local request_url = ApiBase .. '/v1.0/search/?tachiyomi=true&q=' .. query
     local request = Http.request('GET', request_url)
     local result = Client:do_request(request)
     local result_body = Json.decode(result['body'])
@@ -45,8 +47,8 @@ function SearchManga(query)
         local title = val['title']
 
         if title ~= nil then
-            local id = val['id']
-            local link = ApiBase .. '/comic/' .. tostring(id) .. '/chapter'
+            local hid = val['hid']
+            local link = ApiBase .. '/comic/' .. tostring(hid) .. '/chapters'
             local manga = { url = link, name = title }
 
             mangas[i] = manga
@@ -61,7 +63,7 @@ end
 -- @param mangaURL URL of the manga
 -- @return Table of tables with the following fields: name, url
 function MangaChapters(mangaURL)
-    local request_url = mangaURL .. '?lang=' .. Lang .. '&limit=' .. Limit .. '&chap-order=' .. Order
+    local request_url = mangaURL .. '?tachiyomi=true&lang=' .. Lang .. '&limit=' .. Limit .. '&chap-order=' .. Order
     local chapters = {}
     local i = 1
 
@@ -153,3 +155,4 @@ end
 --- END HELPERS ---
 
 -- ex: ts=4 sw=4 et filetype=lua
+
