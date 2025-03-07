@@ -14,5 +14,5 @@ Feel free to contribute! You can use `mangal sources gen --name "..." --url "...
 - [ComicK](scrapers/ComicK.lua)
 - [Luminous Scans](scrapers/LuminousScans.lua)
 - [Manganelo](scrapers/Manganelo.lua)
-- [Mangasee](scrapers/Mangasee.lua)
 - [Readmanga](scrapers/Readmanga.lua)
+- [WeebCentral](scrapers/WeebCentral.lua)
