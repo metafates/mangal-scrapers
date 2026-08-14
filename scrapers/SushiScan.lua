@@ -1,6 +1,6 @@
 ----------------------------------------
 -- @name    Sushiscan 
--- @url     https://sushiscan.net
+-- @url     https://sushiscan.fr
 -- @author  https://github.com/0x697A756B69
 -- @license MIT
 -------------------------------------
@@ -20,7 +20,7 @@ Time = require("time")
 
 ----- VARIABLES -----
 Client = Http.client()
-Base = "https://sushiscan.net"
+Base = "https://sushiscan.fr"
 --- END VARIABLES ---
 
 
@@ -126,7 +126,7 @@ end
 
 ----- HELPERS -----
 --- Performs a request with transient retries.
--- Retries on transport errors and Cloudflare challenges, with backoff.
+-- Retries on transport errors, with backoff.
 -- @param url string
 -- @param attempts number
 -- @param base_delay number
@@ -136,25 +136,15 @@ function Fetch(url, attempts, base_delay)
     for attempt = 1, attempts do
         local request = Http.request("GET", url)
         local result, e = Client:do_request(request)
-        local challenged = result ~= nil and (result.code == 403 or result.code == 503) and
-            (result.body:find("cf-challenge", 1, true) or result.body:find("Just a moment", 1, true))
-
-        if result ~= nil and not challenged then
+        if result ~= nil then
             return result
         end
-
-        if challenged then
-            err = "Cloudflare challenge (HTTP " .. result.code .. ")"
-        else
-            err = e
-        end
-
+        err = e
         if attempt < attempts then
-            local delay = challenged and base_delay * 5 * 2^(attempt - 1) or base_delay * 2^(attempt - 1)
-            Time.sleep(delay)
+            Time.sleep(base_delay * 2^(attempt - 1))
         end
     end
-    error("Sushiscan: " .. attempts .. " attempts failed: " .. tostring(err) .. ". If Cloudflare keeps blocking, retry later.")
+    error("Sushiscan: " .. attempts .. " attempts failed: " .. tostring(err))
 end
 
 function Reverse(t)
