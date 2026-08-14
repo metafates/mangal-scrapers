@@ -135,8 +135,10 @@ function Fetch(url, attempts, base_delay)
     local err
     for attempt = 1, attempts do
         local request = Http.request("GET", url)
-        local result, e = Client:do_request(request)
-        if result ~= nil then
+        local ok, result, e = pcall(function()
+            return Client:do_request(request)
+        end)
+        if ok and result ~= nil then
             return result
         end
         err = e
